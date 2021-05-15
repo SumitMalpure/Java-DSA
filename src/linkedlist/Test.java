@@ -1,5 +1,7 @@
 package linkedlist;
 
+import java.util.Stack;
+
 /**
  * 
  * @author sumitmalpure1089
@@ -20,11 +22,14 @@ public class Test {
 		printList(head);
 		System.out.println("\nRecursive Linked List Print:");
 		printListRecursive(head);
+		Node reverseListByK = reverse(head, 2);
+		System.out.println("\nReverse List by 2:");
+		printList(reverseListByK);
 	}
 
 	/**
-	 * Iterative approach Time Complexity of O(N)
-	 * No auxiliary space required
+	 * Iterative approach Time Complexity of O(N) No auxiliary space required
+	 * 
 	 * @param head
 	 */
 	public static void printList(Node head) {
@@ -36,8 +41,8 @@ public class Test {
 	}
 
 	/**
-	 * O(N) time complexity
-	 * O(N) auxiliary space
+	 * O(N) time complexity O(N) auxiliary space
+	 * 
 	 * @param head
 	 */
 	public static void printListRecursive(Node head) {
@@ -45,8 +50,38 @@ public class Test {
 			return;
 		}
 		System.out.print(head.data + " ");
-		printList(head.next);
+		printListRecursive(head.next);
 
+	}
+
+	/**
+	 * Iterative approach reverse first k nodes and then merge two lists
+	 * 
+	 * @param node
+	 * @param k
+	 * @return
+	 */
+	public static Node reverse(Node node, int k) {
+		Stack<Node> stk = new Stack<Node>();
+		Node res = null;
+		while (node != null) {
+			for (int i = 0; i < k; i++) {
+				if (node != null) {
+					stk.push(node);
+					node = node.next;
+				}
+			}
+			if(res==null) {
+				res = stk.pop();	
+			}
+			//This logic needs to be changed
+			while (!stk.isEmpty()) {
+				Node temp = stk.pop();
+				res.next = temp;
+			}
+
+		}
+		return res;
 	}
 }
 
